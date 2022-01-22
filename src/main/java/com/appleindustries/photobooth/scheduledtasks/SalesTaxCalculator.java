@@ -25,7 +25,7 @@ public class SalesTaxCalculator {
     PurchaseDetailRepository purchaseDetailRepository;
 
     /**
-     * Calculate taxes for previous month on the 1st
+     * Calculate taxes for previous month
      */
     @Scheduled(cron = "0 0 1 1 1/1 *")
     public void calculateTaxesForPreviousMonth() {

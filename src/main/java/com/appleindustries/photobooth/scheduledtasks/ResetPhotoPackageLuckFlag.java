@@ -22,7 +22,10 @@ public class ResetPhotoPackageLuckFlag {
     @Autowired
     PhotoPackageRepository photoPackageRepository;
 
-    @Scheduled(cron = "0 0 0 1 1/1 *")
+    /**
+     * Reset luck flags to true
+     */
+    @Scheduled(cron = "0 0 * * * *")
     public void resetPhotoPackageLuckFlagsTask() {
         List<PhotoPackage> photoPackages = (List<PhotoPackage>) photoPackageService.listAll();
         for (PhotoPackage photoPackage : photoPackages) {

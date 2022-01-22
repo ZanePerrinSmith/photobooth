@@ -2,9 +2,7 @@ package com.appleindustries.photobooth.controllers;
 
 import com.appleindustries.photobooth.entities.Customer;
 import com.appleindustries.photobooth.entities.Purchase;
-import com.appleindustries.photobooth.repositories.CustomerRepository;
 import com.appleindustries.photobooth.repositories.PhotoPackageRepository;
-import com.appleindustries.photobooth.repositories.PurchaseRepository;
 import com.appleindustries.photobooth.services.CustomerService;
 import com.appleindustries.photobooth.services.PhotoPackageService;
 import com.appleindustries.photobooth.services.PurchaseService;
@@ -29,10 +27,6 @@ public class CustomerController {
     @Autowired
     PhotoPackageService photoPackageService;
 
-    @Autowired
-    CustomerRepository customerRepository;
-    @Autowired
-    PurchaseRepository purchaseRepository;
     @Autowired
     PhotoPackageRepository photoPackageRepository;
 

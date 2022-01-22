@@ -3,7 +3,6 @@ package com.appleindustries.photobooth.services;
 import com.appleindustries.photobooth.entities.Purchase;
 import com.appleindustries.photobooth.entities.PurchaseDetail;
 import com.appleindustries.photobooth.repositories.PhotoPackageRepository;
-import com.appleindustries.photobooth.repositories.PurchaseRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,8 +22,6 @@ public class PurchaseServiceJpaDaoImpl extends AbstractJpaDaoService implements 
     private static final int LUCK_PROBABILITY = 5;
     private static final int WINNER = 1;
 
-    @Autowired
-    PurchaseRepository purchaseRepository;
     @Autowired
     PurchaseDetailService purchaseDetailService;
     @Autowired
