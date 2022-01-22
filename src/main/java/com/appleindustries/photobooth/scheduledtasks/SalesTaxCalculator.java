@@ -1,8 +1,7 @@
 package com.appleindustries.photobooth.scheduledtasks;
 
-import com.appleindustries.photobooth.entities.Purchase;
 import com.appleindustries.photobooth.entities.PurchaseDetail;
-import com.appleindustries.photobooth.repositories.PurchaseRepository;
+import com.appleindustries.photobooth.repositories.PurchaseDetailRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -19,11 +18,11 @@ import java.util.List;
  */
 @Component
 @AllArgsConstructor
-public class MonthlySalesTaxCalculator {
-    private static final BigDecimal SALES_TAX_RATE = new BigDecimal(8.635);
+public class SalesTaxCalculator {
+    public static final BigDecimal SALES_TAX_RATE = new BigDecimal(8.635);
 
     @Autowired
-    PurchaseRepository purchaseRepository;
+    PurchaseDetailRepository purchaseDetailRepository;
 
     /**
      * Calculate taxes for previous month on the 1st
@@ -41,20 +40,18 @@ public class MonthlySalesTaxCalculator {
 
     public BigDecimal calculateTaxesForMonth(Date monthBegin, Date monthEnd) {
         BigDecimal salesTaxDue = new BigDecimal(0);
-        List<Purchase> purchases = purchaseRepository.findPurchasesForMonth(monthBegin, monthEnd);
+        List<PurchaseDetail> purchaseDetails = purchaseDetailRepository.findPurchasesForMonth(monthBegin, monthEnd);
 
-        for (Purchase purchase : purchases) {
-            salesTaxDue.add(getPrice(purchase));
+        for (PurchaseDetail purchaseDetail : purchaseDetails) {
+            salesTaxDue = salesTaxDue.add(getSalePrice(purchaseDetail));
         }
         return salesTaxDue.multiply(SALES_TAX_RATE);
     }
 
-    private BigDecimal getPrice(Purchase purchase) {
-        BigDecimal price = new BigDecimal(0);
-        for (PurchaseDetail purchaseDetail : purchase.getPurchaseDetails()) {
-            price.add(purchaseDetail.getPrice());
-        }
-        return price;
+    private BigDecimal getSalePrice(PurchaseDetail purchaseDetail) {
+        BigDecimal price = purchaseDetail.getPrice();
+        BigDecimal quantity = BigDecimal.valueOf(purchaseDetail.getQuantity());
+        return price.multiply(quantity);
     }
 
     private Date convertLocalDateToDate(LocalDate date) {
