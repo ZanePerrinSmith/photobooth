@@ -49,11 +49,14 @@ public class PurchaseServiceJpaDaoImpl extends AbstractJpaDaoService implements 
     }
 
     @Override
-    public Purchase saveOrUpdate(Purchase domainObject) {
+    public Purchase saveOrUpdate(Purchase purchase) {
         EntityManager em = emf.createEntityManager();
 
         em.getTransaction().begin();
-        Purchase savedPurchase = em.merge(domainObject);
+        if (isLucky(purchase)) {
+            purchase.addAllPurchaseDetail(prizeService.getPrizes(purchase));
+        }
+        Purchase savedPurchase = em.merge(purchase);
         em.getTransaction().commit();
 
         return savedPurchase;

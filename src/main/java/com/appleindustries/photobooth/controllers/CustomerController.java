@@ -77,4 +77,33 @@ public class CustomerController {
         return purchaseService.saveOrUpdate(purchase);
     }
 
+    @GetMapping("/{id}/purchase/list")
+    public List<Purchase> listPurhcases() {
+        return (List<Purchase>) purchaseService.listAll();
+    }
+
+    @GetMapping("/{id}/purchase/show/{id}")
+    public Purchase showPurchase(@PathVariable Integer id) {
+        return purchaseService.getById(id);
+    }
+
+    @PostMapping("/{id}/purchase/edit/{id}")
+    public Purchase editPurhcase(@PathVariable Integer id, @RequestBody Purchase purchase) {
+        Purchase purchaseToUpdate = purchaseService.getById(id);
+        purchaseToUpdate = purchaseService.merge(purchaseToUpdate, purchase);
+        return purchaseService.saveOrUpdate(purchaseToUpdate);
+    }
+
+    @PostMapping("/{id}/purchase/saveOrUpdate")
+    public Purchase saveOrUpdatePurchase(@RequestBody Purchase purchase) {
+        return purchaseService.saveOrUpdate(purchase);
+    }
+
+    @DeleteMapping("/{id}/purchase/delete/{id}")
+    public String deletePurchase(@PathVariable Integer id) {
+        Purchase purchaseToDelete = purchaseService.getById(id);
+        purchaseService.delete(id);
+        return "Deleted " + purchaseToDelete.toString();
+    }
+
 }

@@ -39,4 +39,52 @@ class CustomerControllerTest {
     @Test
     void createPurchase() {
     }
+
+    @Test
+    void testListCustomers() {
+    }
+
+    @Test
+    void testShowCustomer() {
+    }
+
+    @Test
+    void testCreateCustomer() {
+    }
+
+    @Test
+    void testEditCustomer() {
+    }
+
+    @Test
+    void testSaveOrUpdate() {
+    }
+
+    @Test
+    void testDeleteCustomer() {
+    }
+
+    @Test
+    void testCreatePurchase() {
+    }
+
+    @Test
+    void listPurhcases() {
+    }
+
+    @Test
+    void showPurchase() {
+    }
+
+    @Test
+    void editPurhcase() {
+    }
+
+    @Test
+    void saveOrUpdatePurchase() {
+    }
+
+    @Test
+    void deletePurchase() {
+    }
 }

@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Component
 @AllArgsConstructor
-public class ResetPhotoPackageLuckFlag<resetPhotoPackageLuckFlags> {
+public class ResetPhotoPackageLuckFlag {
 
     @Autowired
     PhotoPackageService photoPackageService;
@@ -23,7 +23,7 @@ public class ResetPhotoPackageLuckFlag<resetPhotoPackageLuckFlags> {
     PhotoPackageRepository photoPackageRepository;
 
     @Scheduled(cron = "0 0 0 1 1/1 *")
-    public void resetPhotoPackageLuckFlags() {
+    public void resetPhotoPackageLuckFlagsTask() {
         List<PhotoPackage> photoPackages = (List<PhotoPackage>) photoPackageService.listAll();
         for (PhotoPackage photoPackage : photoPackages) {
             photoPackage.setLuckEnabled(true);
