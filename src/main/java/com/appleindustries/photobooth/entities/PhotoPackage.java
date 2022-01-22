@@ -25,6 +25,7 @@ public class PhotoPackage extends AbstractEntity {
 
     private BigDecimal price;
 
-    private boolean luckEnabled = true;
+    @Column(columnDefinition = "tinyint(1) default 1")
+    private boolean luckEnabled;
 
 }

@@ -30,9 +30,16 @@ public class PurchaseDetail extends AbstractEntity {
     @PrePersist
     @PreUpdate
     private void determinePrice() {
-        if (null == price || BigDecimal.ZERO != price) {
+        if (null == price) {
+            BigDecimal photoPackagePrice = this.getPhotoPackage().getPrice();
+            setPrice(photoPackagePrice.multiply(BigDecimal.valueOf(quantity)));
+        } else if (isGreaterThanZero(price)) {
             BigDecimal photoPackagePrice = this.getPhotoPackage().getPrice();
             setPrice(photoPackagePrice.multiply(BigDecimal.valueOf(quantity)));
         }
+    }
+
+    private boolean isGreaterThanZero(BigDecimal price) {
+        return price.compareTo(BigDecimal.ZERO) == 1;
     }
 }

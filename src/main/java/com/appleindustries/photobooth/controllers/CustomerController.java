@@ -2,7 +2,6 @@ package com.appleindustries.photobooth.controllers;
 
 import com.appleindustries.photobooth.entities.Customer;
 import com.appleindustries.photobooth.entities.Purchase;
-import com.appleindustries.photobooth.enums.PhotoPackageEnum;
 import com.appleindustries.photobooth.repositories.CustomerRepository;
 import com.appleindustries.photobooth.repositories.PhotoPackageRepository;
 import com.appleindustries.photobooth.repositories.PurchaseRepository;
@@ -72,11 +71,9 @@ public class CustomerController {
     }
 
     @PostMapping("/{id}/purchase/create")
-    public Purchase createPurchase(@PathVariable Integer id, @RequestBody PhotoPackageEnum type) {
+    public Purchase createPurchase(@PathVariable Integer id, @RequestBody Purchase purchase) {
         Customer customer = customerService.getById(id);
-        Purchase purchase = new Purchase();
         purchase.setCustomer(customer);
-//        purchase.setPhotoPackage(photoPackageRepository.findByType(type));
         return purchaseService.saveOrUpdate(purchase);
     }
 

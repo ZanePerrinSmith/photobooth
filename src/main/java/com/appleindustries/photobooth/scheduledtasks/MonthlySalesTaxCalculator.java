@@ -38,6 +38,16 @@ public class MonthlySalesTaxCalculator {
         calculateTaxesForMonth(monthBegin, monthEnd);
     }
 
+    public BigDecimal calculateTaxesForMonth(Date monthBegin, Date monthEnd) {
+        BigDecimal salesTaxDue = new BigDecimal(0);
+        List<Purchase> purchases = purchaseRepository.findPurchasesForMonth(monthBegin, monthEnd);
+
+        for (Purchase purchase : purchases) {
+            salesTaxDue.add(purchase.getPrice());
+        }
+        return salesTaxDue.multiply(SALES_TAX_RATE);
+    }
+
     private Date convertLocalDateToDate(LocalDate date) {
         ZoneId defaultZoneId = ZoneId.systemDefault();
         return Date.from(date.atStartOfDay(defaultZoneId).toInstant());
@@ -54,15 +64,5 @@ public class MonthlySalesTaxCalculator {
     private LocalDate getPreviousMonth() {
         LocalDate today = LocalDate.now();
         return today.minusMonths(1);
-    }
-
-    private BigDecimal calculateTaxesForMonth(Date monthBegin, Date monthEnd) {
-        BigDecimal salesTaxDue = new BigDecimal(0);
-        List<Purchase> purchases = purchaseRepository.findPurchasesForMonth(monthBegin, monthEnd);
-
-        for (Purchase purchase : purchases) {
-            salesTaxDue.add(purchase.getPrice());
-        }
-        return salesTaxDue.multiply(SALES_TAX_RATE);
     }
 }

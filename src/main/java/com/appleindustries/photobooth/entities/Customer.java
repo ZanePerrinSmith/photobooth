@@ -28,9 +28,16 @@ public class Customer extends AbstractEntity {
     private String lastName;
     private String email;
 
+
     public void addPurchase(Purchase purchase) {
         purchase.setCustomer(this);
         purchases.add(purchase);
+    }
+
+    public void addAllPurchaseDetail(List<Purchase> purchasesToAdd) {
+        for (Purchase purchase : purchasesToAdd) {
+            addPurchase(purchase);
+        }
     }
 
     public void removePurchase(Purchase purchase) {

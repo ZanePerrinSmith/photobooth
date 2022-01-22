@@ -33,6 +33,12 @@ public class Purchase extends AbstractEntity {
         purchaseDetails.add(purchaseDetail);
     }
 
+    public void addAllPurchaseDetail(List<PurchaseDetail> purchaseDetailsToAdd) {
+        for (PurchaseDetail purchaseDetail : purchaseDetailsToAdd) {
+            addPurchaseDetail(purchaseDetail);
+        }
+    }
+
     public void removePurchaseDetail(Purchase purchase) {
         purchaseDetails.remove(purchase);
     }

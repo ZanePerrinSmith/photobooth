@@ -38,6 +38,7 @@ public class PurchaseDetailServiceJpaDaoImpl extends AbstractJpaDaoService imple
     }
 
     @Override
+    // TODO
     public PurchaseDetail merge(PurchaseDetail purchaseDetailToUpdate, PurchaseDetail purchaseDetail) {
         return null;
     }
