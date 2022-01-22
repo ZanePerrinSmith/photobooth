@@ -26,38 +26,23 @@ public class Purchase extends AbstractEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "purchase", orphanRemoval = true)
     private List<PurchaseDetail> purchaseDetails = new ArrayList<>();
 
-//    @ManyToMany
-//    @JoinTable
-//    private List<PhotoPackage> photoPackages = new ArrayList<>();
-//
-//    @ManyToOne
-//    private PhotoPackage photoPackage;
-
     private BigDecimal price;
 
-//    public void addPhotoPackage(PhotoPackage photoPackage) {
-//        photoPackage.addPurchase(this);
-//        photoPackages.add(photoPackage);
-//    }
-//
-//    public void removePhotoPackage(PhotoPackage photoPackage) {
-//        photoPackage.removePurchase(this);
-//        photoPackages.remove(photoPackage);
-//    }
+    public void addPurchaseDetail(PurchaseDetail purchaseDetail) {
+        purchaseDetail.setPurchase(this);
+        purchaseDetails.add(purchaseDetail);
+    }
 
-//    public void setCustomer(Customer customer) {
-//        this.customer = customer;
-//    }
+    public void removePurchaseDetail(Purchase purchase) {
+        purchaseDetails.remove(purchase);
+    }
 
     @PrePersist
     @PreUpdate
-    private void initializePrice() {
+    private void determinePrice() {
         BigDecimal price = new BigDecimal(0);
         for (PurchaseDetail purchaseDetail : purchaseDetails) {
-            BigDecimal photoPackagePrice = purchaseDetail.getPhotoPackage().getSoldPrice();
-            BigDecimal quantity = BigDecimal.valueOf(purchaseDetail.getQuantity());
-
-            price.add(photoPackagePrice.multiply(quantity));
+            price.add(purchaseDetail.getPrice());
         }
     }
 }

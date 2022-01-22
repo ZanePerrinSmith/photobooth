@@ -6,12 +6,18 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
+import java.util.List;
+
 /**
  * @author zane
  */
 @Repository
 public interface PurchaseRepository extends JpaRepository<Customer, Integer> {
 
-    @Query("select o from Purchase o where o.id = ?1 and o.customer = ?2")
+    @Query("select p from Purchase p where p.id = ?1 and p.customer = ?2")
     Purchase findByOrderIdAndCustomerId(Integer orderId, Integer customerId);
+
+    @Query("select p from Purchase p where p.dateCreated between")
+    List<Purchase> findPurchasesForMonth(Date monthBegin, Date monthEnd);
 }
