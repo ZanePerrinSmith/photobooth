@@ -5,8 +5,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.*;
-import java.math.BigDecimal;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,12 +23,12 @@ import java.util.List;
 public class Purchase extends AbstractEntity {
 
     @ManyToOne
+    @ToString.Exclude
     private Customer customer;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "purchase", orphanRemoval = true)
+    @ToString.Exclude
     private List<PurchaseDetail> purchaseDetails = new ArrayList<>();
-
-    private BigDecimal price;
 
     public void addPurchaseDetail(PurchaseDetail purchaseDetail) {
         purchaseDetail.setPurchase(this);
@@ -43,12 +45,4 @@ public class Purchase extends AbstractEntity {
         purchaseDetails.remove(purchase);
     }
 
-    @PrePersist
-    @PreUpdate
-    private void determinePrice() {
-        BigDecimal price = new BigDecimal(0);
-        for (PurchaseDetail purchaseDetail : purchaseDetails) {
-            price.add(purchaseDetail.getPrice());
-        }
-    }
 }

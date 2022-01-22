@@ -8,6 +8,8 @@ import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.math.BigDecimal;
 
 /**
@@ -21,11 +23,11 @@ import java.math.BigDecimal;
 public class PhotoPackage extends AbstractEntity {
 
     @Column(unique = true)
+    @Enumerated(EnumType.STRING)
     private PhotoPackageEnum type;
 
     private BigDecimal price;
 
-    @Column(columnDefinition = "tinyint(1) default 1")
-    private boolean luckEnabled;
+    private boolean luckEnabled = true;
 
 }

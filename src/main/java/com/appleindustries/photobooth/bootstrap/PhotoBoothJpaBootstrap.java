@@ -3,10 +3,12 @@ package com.appleindustries.photobooth.bootstrap;
 import com.appleindustries.photobooth.entities.Customer;
 import com.appleindustries.photobooth.entities.PhotoPackage;
 import com.appleindustries.photobooth.entities.Purchase;
+import com.appleindustries.photobooth.entities.PurchaseDetail;
 import com.appleindustries.photobooth.enums.PhotoPackageEnum;
 import com.appleindustries.photobooth.repositories.PhotoPackageRepository;
 import com.appleindustries.photobooth.services.CustomerService;
 import com.appleindustries.photobooth.services.PhotoPackageService;
+import com.appleindustries.photobooth.services.PurchaseDetailService;
 import com.appleindustries.photobooth.services.PurchaseService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -28,6 +30,8 @@ public class PhotoBoothJpaBootstrap implements ApplicationListener<ContextRefres
     CustomerService customerService;
     @Autowired
     PurchaseService purchaseService;
+    @Autowired
+    PurchaseDetailService purchaseDetailService;
     @Autowired
     PhotoPackageService photoPackageService;
 
@@ -43,35 +47,60 @@ public class PhotoBoothJpaBootstrap implements ApplicationListener<ContextRefres
 
     private void loadPurchases() {
         List<Customer> customers = (List<Customer>) customerService.listAll();
-        List<PhotoPackage> photoPackages = new ArrayList<>();
-        photoPackages.add(photoPackageRepository.findByType(PhotoPackageEnum.PRINT));
+        PhotoPackage photoPackage = photoPackageRepository.findByType(PhotoPackageEnum.PRINT);
         for (Customer customer : customers) {
+            PurchaseDetail purchaseDetail = new PurchaseDetail();
+            purchaseDetail.setQuantity(1);
+            purchaseDetail.setPhotoPackage(photoPackage);
+            //purchaseDetailService.saveOrUpdate(purchaseDetail);
+
             Purchase purchase = new Purchase();
-            purchase.setCustomer(customer);
-            // purchase.setPhotoPackage(photoPackageRepository.findByType(PhotoPackageEnum.PRINT));
+            customer.addPurchase(purchase);
+            purchase.addPurchaseDetail(purchaseDetail);
+            purchaseService.saveOrUpdate(purchase);
         }
     }
 
-
     private void loadCustomers() {
-        Customer customer1 = new Customer(new ArrayList<>(), "Zane", "Smith", "zps@gmail.com");
+        Customer customer1 = new Customer();
+        customer1.setFirstName("Zane");
+        customer1.setLastName("Smith");
+        customer1.setEmail("zps@gmail.com");
         customerService.saveOrUpdate(customer1);
-        Customer customer2 = new Customer(new ArrayList<>(), "Robby", "Keene", "rk@gmail.com");
+        Customer customer2 = new Customer();
+        customer2.setFirstName("Daniel");
+        customer2.setLastName("LaRusso");
+        customer2.setEmail("dl@myagi.com");
         customerService.saveOrUpdate(customer2);
-        Customer customer3 = new Customer(new ArrayList<>(), "Miguel", "Diaz", "md@eaglefang.com");
+        Customer customer3 = new Customer();
+        customer3.setFirstName("Johnny");
+        customer3.setLastName("Lawrence");
+        customer3.setEmail("jl@eaglefang.com");
         customerService.saveOrUpdate(customer3);
-        Customer customer4 = new Customer(new ArrayList<>(), "Daniel", "LaRusso", "dl@myagido.com");
+        Customer customer4 = new Customer();
+        customer4.setFirstName("John");
+        customer4.setLastName("Kreese");
+        customer4.setEmail("jk@cobrakai.com");
         customerService.saveOrUpdate(customer4);
-        Customer customer5 = new Customer(new ArrayList<>(), "Johnny", "Lawrence", "jl@eaglefang.com");
+        Customer customer5 = new Customer();
+        customer5.setFirstName("Terrance");
+        customer5.setLastName("Silver");
+        customer5.setEmail("ts@cobrakai.com");
         customerService.saveOrUpdate(customer5);
     }
 
     private void loadPhotoPackages() {
-//        PhotoPackage photoPackage1 = new PhotoPackage(PhotoPackageEnum.PRINT, new BigDecimal(5), null);
-//        photoPackageService.saveOrUpdate(photoPackage1);
-//        PhotoPackage photoPackage2 = new PhotoPackage(PhotoPackageEnum.PANORAMA, new BigDecimal(7), null);
-//        photoPackageService.saveOrUpdate(photoPackage2);
-//        PhotoPackage photoPackage3 = new PhotoPackage(PhotoPackageEnum.STRIPS, new BigDecimal(5), null);
-//        photoPackageService.saveOrUpdate(photoPackage3);
+        PhotoPackage photoPackage1 = new PhotoPackage();
+        photoPackage1.setType(PhotoPackageEnum.PRINT);
+        photoPackage1.setPrice(new BigDecimal(5));
+        photoPackageService.saveOrUpdate(photoPackage1);
+        PhotoPackage photoPackage2 = new PhotoPackage();
+        photoPackage2.setType(PhotoPackageEnum.PANORAMA);
+        photoPackage2.setPrice(new BigDecimal(7));
+        photoPackageService.saveOrUpdate(photoPackage2);
+        PhotoPackage photoPackage3 = new PhotoPackage();
+        photoPackage3.setType(PhotoPackageEnum.STRIPS);
+        photoPackage3.setPrice(new BigDecimal(5));
+        photoPackageService.saveOrUpdate(photoPackage3);
     }
 }

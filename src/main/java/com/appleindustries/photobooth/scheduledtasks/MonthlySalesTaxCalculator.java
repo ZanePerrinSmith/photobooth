@@ -1,6 +1,7 @@
 package com.appleindustries.photobooth.scheduledtasks;
 
 import com.appleindustries.photobooth.entities.Purchase;
+import com.appleindustries.photobooth.entities.PurchaseDetail;
 import com.appleindustries.photobooth.repositories.PurchaseRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,9 +44,17 @@ public class MonthlySalesTaxCalculator {
         List<Purchase> purchases = purchaseRepository.findPurchasesForMonth(monthBegin, monthEnd);
 
         for (Purchase purchase : purchases) {
-            salesTaxDue.add(purchase.getPrice());
+            salesTaxDue.add(getPrice(purchase));
         }
         return salesTaxDue.multiply(SALES_TAX_RATE);
+    }
+
+    private BigDecimal getPrice(Purchase purchase) {
+        BigDecimal price = new BigDecimal(0);
+        for (PurchaseDetail purchaseDetail : purchase.getPurchaseDetails()) {
+            price.add(purchaseDetail.getPrice());
+        }
+        return price;
     }
 
     private Date convertLocalDateToDate(LocalDate date) {

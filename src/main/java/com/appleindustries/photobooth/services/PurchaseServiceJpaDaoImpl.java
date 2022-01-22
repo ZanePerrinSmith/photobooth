@@ -20,7 +20,7 @@ import java.util.Random;
 public class PurchaseServiceJpaDaoImpl extends AbstractJpaDaoService implements PurchaseService {
     private static final int ELIGIBLE_WINNER = 1;
     private static final int FIRST_PURCHASE_DETAIL = 0;
-    private static final int LUCK_PROBABILITY = 2;
+    private static final int LUCK_PROBABILITY = 5;
     private static final int WINNER = 1;
 
     @Autowired
@@ -87,11 +87,11 @@ public class PurchaseServiceJpaDaoImpl extends AbstractJpaDaoService implements 
 
     @Override
     public boolean isLucky(Purchase purchase) {
-        Random random = new Random(LUCK_PROBABILITY);
+        Random random = new Random();
         List<PurchaseDetail> purchaseDetails = purchase.getPurchaseDetails();
         return purchaseDetails.size() == ELIGIBLE_WINNER
                 && purchaseDetailService.isLucky(purchaseDetails.get(FIRST_PURCHASE_DETAIL))
-                && random.nextInt() >= WINNER;
+                && random.nextInt(LUCK_PROBABILITY) <= WINNER;
     }
 }
 

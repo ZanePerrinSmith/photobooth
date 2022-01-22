@@ -22,6 +22,7 @@ import java.util.List;
 public class Customer extends AbstractEntity {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer", orphanRemoval = true)
+    @ToString.Exclude
     List<Purchase> purchases = new ArrayList<>();
 
     private String firstName;

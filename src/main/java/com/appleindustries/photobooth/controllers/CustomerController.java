@@ -82,12 +82,12 @@ public class CustomerController {
         return (List<Purchase>) purchaseService.listAll();
     }
 
-    @GetMapping("/{id}/purchase/show/{id}")
+    @GetMapping("/{id}/purchase/show/{purchaseId}")
     public Purchase showPurchase(@PathVariable Integer id) {
         return purchaseService.getById(id);
     }
 
-    @PostMapping("/{id}/purchase/edit/{id}")
+    @PostMapping("/{id}/purchase/edit/{purchaseId}")
     public Purchase editPurhcase(@PathVariable Integer id, @RequestBody Purchase purchase) {
         Purchase purchaseToUpdate = purchaseService.getById(id);
         purchaseToUpdate = purchaseService.merge(purchaseToUpdate, purchase);
@@ -99,7 +99,7 @@ public class CustomerController {
         return purchaseService.saveOrUpdate(purchase);
     }
 
-    @DeleteMapping("/{id}/purchase/delete/{id}")
+    @DeleteMapping("/{id}/purchase/delete/{purchaseId}")
     public String deletePurchase(@PathVariable Integer id) {
         Purchase purchaseToDelete = purchaseService.getById(id);
         purchaseService.delete(id);

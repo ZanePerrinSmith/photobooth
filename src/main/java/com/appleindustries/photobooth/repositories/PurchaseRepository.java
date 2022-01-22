@@ -18,6 +18,6 @@ public interface PurchaseRepository extends JpaRepository<Customer, Integer> {
     @Query("select p from Purchase p where p.id = ?1 and p.customer = ?2")
     Purchase findByOrderIdAndCustomerId(Integer orderId, Integer customerId);
 
-    @Query("select p from Purchase p where p.dateCreated between")
+    @Query("select p from Purchase p where p.dateCreated between ?1 and ?2")
     List<Purchase> findPurchasesForMonth(Date monthBegin, Date monthEnd);
 }

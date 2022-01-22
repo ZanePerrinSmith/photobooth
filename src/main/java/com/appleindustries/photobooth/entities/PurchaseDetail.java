@@ -19,9 +19,11 @@ import java.math.BigDecimal;
 public class PurchaseDetail extends AbstractEntity {
 
     @ManyToOne
+    @ToString.Exclude
     private Purchase purchase;
 
     @OneToOne
+    @ToString.Exclude
     private PhotoPackage photoPackage;
 
     private Integer quantity;
