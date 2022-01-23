@@ -1,7 +1,6 @@
 package com.appleindustries.photobooth.scheduledtasks;
 
 import com.appleindustries.photobooth.entities.PhotoPackage;
-import com.appleindustries.photobooth.repositories.PhotoPackageRepository;
 import com.appleindustries.photobooth.services.PhotoPackageService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +18,17 @@ public class ResetPhotoPackageLuckFlag {
 
     @Autowired
     PhotoPackageService photoPackageService;
-    @Autowired
-    PhotoPackageRepository photoPackageRepository;
 
     /**
      * Reset luck flags to true
      */
-    @Scheduled(cron = "0 0 * * * *")
+    @Scheduled(cron = "0 0 0 * * *")
     public void resetPhotoPackageLuckFlagsTask() {
         List<PhotoPackage> photoPackages = (List<PhotoPackage>) photoPackageService.listAll();
+        resetPhotoPackageLuckFlagsTask(photoPackages);
+    }
+
+    public void resetPhotoPackageLuckFlagsTask(List<PhotoPackage> photoPackages) {
         for (PhotoPackage photoPackage : photoPackages) {
             photoPackage.setLuckEnabled(true);
             photoPackageService.saveOrUpdate(photoPackage);

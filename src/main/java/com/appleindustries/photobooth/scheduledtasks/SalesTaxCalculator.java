@@ -40,7 +40,7 @@ public class SalesTaxCalculator {
 
     public BigDecimal calculateTaxesForMonth(Date monthBegin, Date monthEnd) {
         BigDecimal salesTaxDue = new BigDecimal(0);
-        List<PurchaseDetail> purchaseDetails = purchaseDetailRepository.findPurchasesForMonth(monthBegin, monthEnd);
+        List<PurchaseDetail> purchaseDetails = purchaseDetailRepository.findPurchasesInDateRange(monthBegin, monthEnd);
 
         for (PurchaseDetail purchaseDetail : purchaseDetails) {
             salesTaxDue = salesTaxDue.add(getSalePrice(purchaseDetail));

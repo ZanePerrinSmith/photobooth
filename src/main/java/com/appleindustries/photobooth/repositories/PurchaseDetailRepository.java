@@ -15,5 +15,5 @@ import java.util.List;
 public interface PurchaseDetailRepository extends JpaRepository<PurchaseDetail, Integer> {
 
     @Query("select p from PurchaseDetail p where p.dateCreated between ?1 and ?2")
-    List<PurchaseDetail> findPurchasesForMonth(Date monthBegin, Date monthEnd);
+    List<PurchaseDetail> findPurchasesInDateRange(Date monthBegin, Date monthEnd);
 }

@@ -66,7 +66,7 @@ class SalesTaxCalculatorTest {
         purchaseDetail3.setQuantity(quantity3);
         purchaseDetails.add(purchaseDetail3);
 
-        when(purchaseDetailRepository.findPurchasesForMonth(any(Date.class), any(Date.class))).thenReturn(purchaseDetails);
+        when(purchaseDetailRepository.findPurchasesInDateRange(any(Date.class), any(Date.class))).thenReturn(purchaseDetails);
 
         BigDecimal result = salesTaxCalculator.calculateTaxesForMonth(new Date(), new Date());
         assertEquals(expectedResult, result);
