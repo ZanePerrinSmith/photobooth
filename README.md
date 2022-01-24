@@ -3,6 +3,9 @@
 ## Implementation 
 Created a simple photo booth using CRUD design for Purchases, Customers, and PhotoPackages.
 
+## Running the Application
+In an IDE run the PhotoboothApplication class
+
 ## Test
 ### Unit Testing
 Open a console in the home directory of this project and run mvn test.
