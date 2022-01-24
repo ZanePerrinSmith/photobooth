@@ -1,6 +1,5 @@
 package com.appleindustries.photobooth.controllers;
 
-import com.appleindustries.photobooth.AbstractRestControllerTest;
 import com.appleindustries.photobooth.entities.Customer;
 import com.appleindustries.photobooth.services.CustomerService;
 import org.junit.jupiter.api.BeforeEach;

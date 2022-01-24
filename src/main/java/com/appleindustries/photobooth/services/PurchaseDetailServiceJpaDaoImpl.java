@@ -12,6 +12,11 @@ import java.util.List;
 @Service
 public class PurchaseDetailServiceJpaDaoImpl extends AbstractJpaDaoService implements PurchaseDetailService {
 
+    private static final Integer LUCKY_PURCHASE_QUANTITY = 1;
+
+    /**
+     * @return
+     */
     @Override
     public List<PurchaseDetail> listAll() {
         EntityManager em = emf.createEntityManager();
@@ -19,6 +24,10 @@ public class PurchaseDetailServiceJpaDaoImpl extends AbstractJpaDaoService imple
         return em.createQuery("from PurchaseDetail", PurchaseDetail.class).getResultList();
     }
 
+    /**
+     * @param id
+     * @return
+     */
     @Override
     public PurchaseDetail getById(Integer id) {
         EntityManager em = emf.createEntityManager();
@@ -26,21 +35,31 @@ public class PurchaseDetailServiceJpaDaoImpl extends AbstractJpaDaoService imple
         return em.find(PurchaseDetail.class, id);
     }
 
+    /**
+     * @param photoPackage
+     * @return
+     */
     @Override
-    public PurchaseDetail saveOrUpdate(PurchaseDetail domainObject) {
+    public PurchaseDetail saveOrUpdate(PurchaseDetail photoPackage) {
         EntityManager em = emf.createEntityManager();
 
         em.getTransaction().begin();
-        PurchaseDetail savedPurchaseDetail = em.merge(domainObject);
+        PurchaseDetail savedPurchaseDetail = em.merge(photoPackage);
         em.getTransaction().commit();
 
         return savedPurchaseDetail;
     }
 
+    /**
+     * @param purchaseDetailToUpdate
+     * @param purchaseDetail
+     * @return
+     */
     @Override
-    // TODO
     public PurchaseDetail merge(PurchaseDetail purchaseDetailToUpdate, PurchaseDetail purchaseDetail) {
-        return null;
+        purchaseDetailToUpdate.setPhotoPackage(purchaseDetail.getPhotoPackage());
+        purchaseDetailToUpdate.setQuantity(purchaseDetail.getQuantity());
+        return purchaseDetailToUpdate;
     }
 
     @Override
@@ -52,8 +71,15 @@ public class PurchaseDetailServiceJpaDaoImpl extends AbstractJpaDaoService imple
         em.getTransaction().commit();
     }
 
+    /**
+     * Check that the PhotoPackage is lucky
+     * and that only 1 was purchased
+     *
+     * @param purchaseDetail
+     * @return
+     */
     @Override
     public boolean isLucky(PurchaseDetail purchaseDetail) {
-        return purchaseDetail.getPhotoPackage().isLuckEnabled();
+        return purchaseDetail.getPhotoPackage().isLuckEnabled() && purchaseDetail.getQuantity() == LUCKY_PURCHASE_QUANTITY;
     }
 }

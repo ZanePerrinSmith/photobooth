@@ -1,6 +1,5 @@
 package com.appleindustries.photobooth.controllers;
 
-import com.appleindustries.photobooth.AbstractRestControllerTest;
 import com.appleindustries.photobooth.entities.PhotoPackage;
 import com.appleindustries.photobooth.enums.PhotoPackageEnum;
 import com.appleindustries.photobooth.services.PhotoPackageService;

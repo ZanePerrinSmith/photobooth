@@ -1,6 +1,5 @@
 package com.appleindustries.photobooth.controllers;
 
-import com.appleindustries.photobooth.AbstractRestControllerTest;
 import com.appleindustries.photobooth.entities.PhotoPackage;
 import com.appleindustries.photobooth.entities.Purchase;
 import com.appleindustries.photobooth.entities.PurchaseDetail;

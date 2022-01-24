@@ -8,7 +8,6 @@ import com.appleindustries.photobooth.enums.PhotoPackageEnum;
 import com.appleindustries.photobooth.repositories.PhotoPackageRepository;
 import com.appleindustries.photobooth.services.CustomerService;
 import com.appleindustries.photobooth.services.PhotoPackageService;
-import com.appleindustries.photobooth.services.PurchaseDetailService;
 import com.appleindustries.photobooth.services.PurchaseService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,17 +26,18 @@ import java.util.List;
 public class PhotoBoothJpaBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
     @Autowired
-    CustomerService customerService;
+    private CustomerService customerService;
     @Autowired
-    PurchaseService purchaseService;
+    private PurchaseService purchaseService;
     @Autowired
-    PurchaseDetailService purchaseDetailService;
-    @Autowired
-    PhotoPackageService photoPackageService;
+    private PhotoPackageService photoPackageService;
 
     @Autowired
-    PhotoPackageRepository photoPackageRepository;
+    private PhotoPackageRepository photoPackageRepository;
 
+    /**
+     * @param event
+     */
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         loadPhotoPackages();

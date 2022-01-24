@@ -22,7 +22,7 @@ public class SalesTaxCalculator {
     public static final BigDecimal SALES_TAX_RATE = new BigDecimal(8.635);
 
     @Autowired
-    PurchaseDetailRepository purchaseDetailRepository;
+    private PurchaseDetailRepository purchaseDetailRepository;
 
     /**
      * Calculate taxes for previous month
@@ -38,6 +38,11 @@ public class SalesTaxCalculator {
         calculateTaxesForMonth(monthBegin, monthEnd);
     }
 
+    /**
+     * @param monthBegin
+     * @param monthEnd
+     * @return
+     */
     public BigDecimal calculateTaxesForMonth(Date monthBegin, Date monthEnd) {
         BigDecimal salesTaxDue = new BigDecimal(0);
         List<PurchaseDetail> purchaseDetails = purchaseDetailRepository.findPurchasesInDateRange(monthBegin, monthEnd);

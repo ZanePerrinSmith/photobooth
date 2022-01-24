@@ -22,14 +22,14 @@ import java.util.List;
 @Entity
 public class Customer extends AbstractEntity {
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer", orphanRemoval = true)
-    @ToString.Exclude
-    @JsonManagedReference
-    List<Purchase> purchases = new ArrayList<>();
-
     private String firstName;
     private String lastName;
     private String email;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer", orphanRemoval = true)
+    @ToString.Exclude
+    @JsonManagedReference
+    private List<Purchase> purchases = new ArrayList<>();
 
 
     public void addPurchase(Purchase purchase) {

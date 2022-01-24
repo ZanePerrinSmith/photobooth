@@ -17,7 +17,7 @@ import java.util.List;
 public class ResetPhotoPackageLuckFlag {
 
     @Autowired
-    PhotoPackageService photoPackageService;
+    private PhotoPackageService photoPackageService;
 
     /**
      * Reset luck flags to true
@@ -28,6 +28,9 @@ public class ResetPhotoPackageLuckFlag {
         resetPhotoPackageLuckFlagsTask(photoPackages);
     }
 
+    /**
+     * @param photoPackages
+     */
     public void resetPhotoPackageLuckFlagsTask(List<PhotoPackage> photoPackages) {
         for (PhotoPackage photoPackage : photoPackages) {
             photoPackage.setLuckEnabled(true);

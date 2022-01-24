@@ -10,7 +10,7 @@ import java.util.Date;
 public abstract class AbstractEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Integer id;
+    private Integer id;
 
     @Version
     private Integer version;

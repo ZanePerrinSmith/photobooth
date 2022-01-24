@@ -2,7 +2,6 @@ package com.appleindustries.photobooth.services;
 
 import com.appleindustries.photobooth.entities.Purchase;
 import com.appleindustries.photobooth.entities.PurchaseDetail;
-import com.appleindustries.photobooth.repositories.PhotoPackageRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,14 +22,13 @@ public class PurchaseServiceJpaDaoImpl extends AbstractJpaDaoService implements 
     private static final int WINNER = 1;
 
     @Autowired
-    PurchaseDetailService purchaseDetailService;
+    private PurchaseDetailService purchaseDetailService;
     @Autowired
-    PhotoPackageService photoPackageService;
-    @Autowired
-    PrizeService prizeService;
-    @Autowired
-    PhotoPackageRepository photoPackageRepository;
+    private PrizeService prizeService;
 
+    /**
+     * @return
+     */
     @Override
     public List<Purchase> listAll() {
         EntityManager em = emf.createEntityManager();
@@ -38,6 +36,10 @@ public class PurchaseServiceJpaDaoImpl extends AbstractJpaDaoService implements 
         return em.createQuery("from Purchase", Purchase.class).getResultList();
     }
 
+    /**
+     * @param id
+     * @return
+     */
     @Override
     public Purchase getById(Integer id) {
         EntityManager em = emf.createEntityManager();
@@ -45,6 +47,10 @@ public class PurchaseServiceJpaDaoImpl extends AbstractJpaDaoService implements 
         return em.find(Purchase.class, id);
     }
 
+    /**
+     * @param purchase
+     * @return
+     */
     @Override
     public Purchase saveOrUpdate(Purchase purchase) {
         EntityManager em = emf.createEntityManager();
@@ -59,13 +65,20 @@ public class PurchaseServiceJpaDaoImpl extends AbstractJpaDaoService implements 
         return savedPurchase;
     }
 
+    /**
+     * @param purchaseToUpdate
+     * @param purchase
+     * @return
+     */
     @Override
-    // TODO
     public Purchase merge(Purchase purchaseToUpdate, Purchase purchase) {
-        //purchaseToUpdate.setPhotoPackages(purchase.getPhotoPackages());
+        purchaseToUpdate.setPurchaseDetails(purchase.getPurchaseDetails());
         return purchaseToUpdate;
     }
 
+    /**
+     * @param id
+     */
     @Override
     public void delete(Integer id) {
         EntityManager em = emf.createEntityManager();
@@ -75,6 +88,10 @@ public class PurchaseServiceJpaDaoImpl extends AbstractJpaDaoService implements 
         em.getTransaction().commit();
     }
 
+    /**
+     * @param customerId
+     * @return
+     */
     @Override
     public Purchase getByCustomerId(Integer customerId) {
         EntityManager em = emf.createEntityManager();
@@ -83,6 +100,11 @@ public class PurchaseServiceJpaDaoImpl extends AbstractJpaDaoService implements 
     }
 
     @Override
+    /**
+     * Check that the user only purchased 1 photo or 1 type
+     * Check if a prize has been given for the photo package they purchased only 1
+     * Randomly calculate if they've won if the above pass
+     */
     public boolean isLucky(Purchase purchase) {
         Random random = new Random();
         List<PurchaseDetail> purchaseDetails = purchase.getPurchaseDetails();

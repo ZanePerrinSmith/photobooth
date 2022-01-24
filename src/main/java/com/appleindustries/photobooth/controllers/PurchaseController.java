@@ -17,23 +17,39 @@ import java.util.List;
 public class PurchaseController {
 
     @Autowired
-    PurchaseService purchaseService;
+    private PurchaseService purchaseService;
 
+    /**
+     * @return
+     */
     @GetMapping("/list")
     public List<Purchase> listPackages() {
         return (List<Purchase>) purchaseService.listAll();
     }
 
+    /**
+     * @param id
+     * @return
+     */
     @GetMapping("/show/{id}")
     public Purchase showPackage(@PathVariable Integer id) {
         return purchaseService.getById(id);
     }
 
+    /**
+     * @param purchase
+     * @return
+     */
     @PostMapping("/create")
     public Purchase createPurchase(Purchase purchase) {
         return purchaseService.saveOrUpdate(purchase);
     }
 
+    /**
+     * @param id
+     * @param purchase
+     * @return
+     */
     @PutMapping("/edit/{id}")
     public Purchase editPurchase(@PathVariable Integer id, Purchase purchase) {
         Purchase purchaseToUpdate = purchaseService.getById(id);
@@ -41,11 +57,19 @@ public class PurchaseController {
         return purchaseService.saveOrUpdate(purchaseToUpdate);
     }
 
+    /**
+     * @param purchase
+     * @return
+     */
     @PostMapping("/saveOrUpdate")
     public Purchase saveOrUpdate(Purchase purchase) {
         return purchaseService.saveOrUpdate(purchase);
     }
 
+    /**
+     * @param id
+     * @return
+     */
     @DeleteMapping("/delete/{id}")
     public String deletePackage(@PathVariable Integer id) {
         Purchase purchaseToDelete = purchaseService.getById(id);

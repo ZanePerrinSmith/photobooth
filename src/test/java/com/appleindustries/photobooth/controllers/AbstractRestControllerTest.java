@@ -1,4 +1,4 @@
-package com.appleindustries.photobooth;
+package com.appleindustries.photobooth.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,11 +14,23 @@ import java.io.IOException;
 public class AbstractRestControllerTest {
 
 
+    /**
+     * @param mvcResult
+     * @param clazz
+     * @param <T>
+     * @return
+     * @throws IOException
+     */
     protected <T> T mvcResultAsObject(MvcResult mvcResult, Class<T> clazz) throws IOException {
         String content = mvcResult.getResponse().getContentAsString();
         return mapFromJson(content, clazz);
     }
 
+    /**
+     * @param obj
+     * @return
+     * @throws JsonProcessingException
+     */
     protected String mapToJson(Object obj) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(obj);

@@ -17,23 +17,39 @@ import java.util.List;
 public class CustomerController {
 
     @Autowired
-    CustomerService customerService;
+    private CustomerService customerService;
 
+    /**
+     * @return
+     */
     @GetMapping("/list")
     public List<Customer> listPackages() {
         return (List<Customer>) customerService.listAll();
     }
 
+    /**
+     * @param id
+     * @return
+     */
     @GetMapping("/show/{id}")
     public Customer showPackage(@PathVariable Integer id) {
         return customerService.getById(id);
     }
 
+    /**
+     * @param customer
+     * @return
+     */
     @PostMapping("/create")
     public Customer createCustomer(Customer customer) {
         return customerService.saveOrUpdate(customer);
     }
 
+    /**
+     * @param id
+     * @param customer
+     * @return
+     */
     @PutMapping("/edit/{id}")
     public Customer editCustomer(@PathVariable Integer id, Customer customer) {
         Customer customerToUpdate = customerService.getById(id);
@@ -41,11 +57,19 @@ public class CustomerController {
         return customerService.saveOrUpdate(customerToUpdate);
     }
 
+    /**
+     * @param customer
+     * @return
+     */
     @PostMapping("/saveOrUpdate")
     public Customer saveOrUpdate(Customer customer) {
         return customerService.saveOrUpdate(customer);
     }
 
+    /**
+     * @param id
+     * @return
+     */
     @DeleteMapping("/delete/{id}")
     public String deletePackage(@PathVariable Integer id) {
         Customer customerToDelete = customerService.getById(id);

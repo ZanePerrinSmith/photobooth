@@ -23,14 +23,17 @@ public class PrizeServiceImpl implements PrizeService {
     private static final int FIRST_PURCHASE_DETAIL = 0;
     private static final Integer PRIZE_QUANTITY = 1;
     private static final BigDecimal PRIZE_PRICE = BigDecimal.ZERO;
-
-
     @Autowired
-    PhotoPackageService photoPackageService;
-
+    private PhotoPackageRepository photoPackageRepository;
     @Autowired
-    PhotoPackageRepository photoPackageRepository;
+    private PhotoPackageService photoPackageService;
 
+    /**
+     * Collect all PhotoPackages that aren't of type purchased
+     *
+     * @param purchase
+     * @return
+     */
     @Override
     public List<PurchaseDetail> getPrizes(Purchase purchase) {
         List<PurchaseDetail> purchaseDetails = new ArrayList<>();

@@ -17,23 +17,39 @@ import java.util.List;
 public class PhotoPackageController {
 
     @Autowired
-    PhotoPackageService photoPackageService;
+    private PhotoPackageService photoPackageService;
 
+    /**
+     * @return
+     */
     @GetMapping("/list")
     public List<PhotoPackage> listPackages() {
         return (List<PhotoPackage>) photoPackageService.listAll();
     }
 
+    /**
+     * @param id
+     * @return
+     */
     @GetMapping("/show/{id}")
     public PhotoPackage showPackage(@PathVariable Integer id) {
         return photoPackageService.getById(id);
     }
 
+    /**
+     * @param photoPackage
+     * @return
+     */
     @PostMapping("/create")
     public PhotoPackage createPhotoPackage(PhotoPackage photoPackage) {
         return photoPackageService.saveOrUpdate(photoPackage);
     }
 
+    /**
+     * @param id
+     * @param photoPackage
+     * @return
+     */
     @PutMapping("/edit/{id}")
     public PhotoPackage editPhotoPackage(@PathVariable Integer id, PhotoPackage photoPackage) {
         PhotoPackage photoPackageToUpdate = photoPackageService.getById(id);
@@ -41,11 +57,19 @@ public class PhotoPackageController {
         return photoPackageService.saveOrUpdate(photoPackageToUpdate);
     }
 
+    /**
+     * @param photoPackage
+     * @return
+     */
     @PostMapping("/saveOrUpdate")
     public PhotoPackage saveOrUpdate(PhotoPackage photoPackage) {
         return photoPackageService.saveOrUpdate(photoPackage);
     }
 
+    /**
+     * @param id
+     * @return
+     */
     @DeleteMapping("/delete/{id}")
     public String deletePackage(@PathVariable Integer id) {
         PhotoPackage photoPackageToDelete = photoPackageService.getById(id);

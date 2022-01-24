@@ -8,5 +8,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author zane
  */
 public interface PhotoPackageRepository extends JpaRepository<PhotoPackage, Integer> {
+    /**
+     * @param type
+     * @return
+     */
     PhotoPackage findByType(PhotoPackageEnum type);
 }

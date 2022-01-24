@@ -17,8 +17,11 @@ import java.util.List;
 public class PhotoPackageServiceJpaDaoImpl extends AbstractJpaDaoService implements PhotoPackageService {
 
     @Autowired
-    PhotoPackageRepository photoPackageRepository;
+    private PhotoPackageRepository photoPackageRepository;
 
+    /**
+     * @return
+     */
     @Override
     public List<PhotoPackage> listAll() {
         EntityManager em = emf.createEntityManager();
@@ -26,6 +29,10 @@ public class PhotoPackageServiceJpaDaoImpl extends AbstractJpaDaoService impleme
         return em.createQuery("from PhotoPackage", PhotoPackage.class).getResultList();
     }
 
+    /**
+     * @param id
+     * @return
+     */
     @Override
     public PhotoPackage getById(Integer id) {
         EntityManager em = emf.createEntityManager();
@@ -33,17 +40,26 @@ public class PhotoPackageServiceJpaDaoImpl extends AbstractJpaDaoService impleme
         return em.find(PhotoPackage.class, id);
     }
 
+    /**
+     * @param photoPackage
+     * @return
+     */
     @Override
-    public PhotoPackage saveOrUpdate(PhotoPackage domainObject) {
+    public PhotoPackage saveOrUpdate(PhotoPackage photoPackage) {
         EntityManager em = emf.createEntityManager();
 
         em.getTransaction().begin();
-        PhotoPackage savedPhotoPackage = em.merge(domainObject);
+        PhotoPackage savedPhotoPackage = em.merge(photoPackage);
         em.getTransaction().commit();
 
         return savedPhotoPackage;
     }
 
+    /**
+     * @param photoPackageToUpdate
+     * @param photoPackage
+     * @return
+     */
     @Override
     public PhotoPackage merge(PhotoPackage photoPackageToUpdate, PhotoPackage photoPackage) {
         photoPackageToUpdate.setType(photoPackage.getType());
@@ -51,6 +67,9 @@ public class PhotoPackageServiceJpaDaoImpl extends AbstractJpaDaoService impleme
         return photoPackageToUpdate;
     }
 
+    /**
+     * @param id
+     */
     @Override
     public void delete(Integer id) {
         EntityManager em = emf.createEntityManager();
