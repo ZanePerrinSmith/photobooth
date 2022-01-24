@@ -4,7 +4,7 @@
 Created a simple photo booth using CRUD design for Purchases, Customers, and PhotoPackages.
 
 ## Running the Application
-In an IDE run the PhotoboothApplication class
+In an IDE run the PhotoboothApplication class.
 
 ## Test
 ### Unit Testing
@@ -26,12 +26,12 @@ do that we’ll need some software that knows what package the customer order
 customer’s order is eligible to win, and then if they in fact won the free prints.
 
 ### Implementation
-Prize winners are selected based off the listed criteria
+Prize winners are selected based off the listed criteria.
 - They purchased only 1 PhotoPackage with quantity of 1
 - The PhotoPackage purhcased has not generated a prize in the last hour
 - They pass "dice roll" to see if they are the lucky winner
 
-Prize tracking is tracked by the luckEnabled column on each PhotoPackage. Every hour at the top of the hour all PhotoPackage's have their luckEnabled set to true
+Prize tracking is tracked by the luckEnabled column on each PhotoPackage. Every hour at the top of the hour all PhotoPackage's have their luckEnabled set to true.
 
 ### Test
 #### DB Test
@@ -44,7 +44,7 @@ Prize tracking is tracked by the luckEnabled column on each PhotoPackage. Every 
 - The 3rd table will show you the PurchaseDetails of those prizes linked the same Purchase in the Purchase_ID column
 ### Future Work
 Increase a customer's luck with loyalty. I was once told that randomly selected winners are never actually random.
-They are selected based on how influential they are to your business i.e. extremely loyal customer, or post many positive reviews online
+They are selected based on how influential they are to your business i.e. extremely loyal customer, or post many positive reviews online.
 
 - Add a column to customer to track number of purchases (or loyalty)
 - Use this number to increase that Customer's chances of getting lucky
