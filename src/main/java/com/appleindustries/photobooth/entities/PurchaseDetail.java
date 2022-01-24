@@ -1,9 +1,7 @@
 package com.appleindustries.photobooth.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -11,7 +9,8 @@ import java.math.BigDecimal;
 /**
  * @author zane
  */
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -20,6 +19,7 @@ public class PurchaseDetail extends AbstractEntity {
 
     @ManyToOne
     @ToString.Exclude
+    @JsonBackReference
     private Purchase purchase;
 
     @OneToOne

@@ -30,19 +30,19 @@ public class PhotoPackageController {
     }
 
     @PostMapping("/create")
-    public PhotoPackage createPhotoPackage(@RequestBody PhotoPackage photoPackage) {
+    public PhotoPackage createPhotoPackage(PhotoPackage photoPackage) {
         return photoPackageService.saveOrUpdate(photoPackage);
     }
 
-    @PostMapping("/edit/{id}")
-    public PhotoPackage editPhotoPackage(@PathVariable Integer id, @RequestBody PhotoPackage photoPackage) {
+    @PutMapping("/edit/{id}")
+    public PhotoPackage editPhotoPackage(@PathVariable Integer id, PhotoPackage photoPackage) {
         PhotoPackage photoPackageToUpdate = photoPackageService.getById(id);
         photoPackageToUpdate = photoPackageService.merge(photoPackageToUpdate, photoPackage);
         return photoPackageService.saveOrUpdate(photoPackageToUpdate);
     }
 
     @PostMapping("/saveOrUpdate")
-    public PhotoPackage saveOrUpdate(@RequestBody PhotoPackage photoPackage) {
+    public PhotoPackage saveOrUpdate(PhotoPackage photoPackage) {
         return photoPackageService.saveOrUpdate(photoPackage);
     }
 

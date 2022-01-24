@@ -1,9 +1,8 @@
 package com.appleindustries.photobooth.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.*;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -15,7 +14,8 @@ import java.util.List;
 /**
  * @author zane
  */
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -24,10 +24,12 @@ public class Purchase extends AbstractEntity {
 
     @ManyToOne
     @ToString.Exclude
+    @JsonBackReference
     private Customer customer;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "purchase", orphanRemoval = true)
     @ToString.Exclude
+    @JsonManagedReference
     private List<PurchaseDetail> purchaseDetails = new ArrayList<>();
 
     public void addPurchaseDetail(PurchaseDetail purchaseDetail) {

@@ -52,7 +52,6 @@ public class PhotoBoothJpaBootstrap implements ApplicationListener<ContextRefres
             PurchaseDetail purchaseDetail = new PurchaseDetail();
             purchaseDetail.setQuantity(1);
             purchaseDetail.setPhotoPackage(photoPackage);
-            //purchaseDetailService.saveOrUpdate(purchaseDetail);
 
             Purchase purchase = new Purchase();
             customer.addPurchase(purchase);
@@ -87,6 +86,31 @@ public class PhotoBoothJpaBootstrap implements ApplicationListener<ContextRefres
         customer5.setLastName("Silver");
         customer5.setEmail("ts@cobrakai.com");
         customerService.saveOrUpdate(customer5);
+        Customer customer6 = new Customer();
+        customer6.setFirstName("Chozen");
+        customer6.setLastName("Toguchi");
+        customer6.setEmail("ct@myagi.com");
+        customerService.saveOrUpdate(customer6);
+        Customer customer7 = new Customer();
+        customer7.setFirstName("Miguel");
+        customer7.setLastName("Diaz");
+        customer7.setEmail("md@cobrakai.com");
+        customerService.saveOrUpdate(customer7);
+        Customer customer8 = new Customer();
+        customer8.setFirstName("Eli");
+        customer8.setLastName("Moskowitz");
+        customer8.setEmail("hawk@myagi.com");
+        customerService.saveOrUpdate(customer8);
+        Customer customer9 = new Customer();
+        customer9.setFirstName("Tory");
+        customer9.setLastName("Nichols");
+        customer9.setEmail("tn@cobrakai.com");
+        customerService.saveOrUpdate(customer9);
+        Customer customer10 = new Customer();
+        customer10.setFirstName("Samantha");
+        customer10.setLastName("LaRusso");
+        customer10.setEmail("sl@myagi.com");
+        customerService.saveOrUpdate(customer10);
     }
 
     private void loadPhotoPackages() {

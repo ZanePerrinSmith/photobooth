@@ -1,29 +1,34 @@
 package com.appleindustries.photobooth.controllers;
 
+import com.appleindustries.photobooth.AbstractRestControllerTest;
 import com.appleindustries.photobooth.entities.Customer;
 import com.appleindustries.photobooth.services.CustomerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.hamcrest.Matchers.hasSize;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * @author zane
  */
-class CustomerControllerTest {
 
+class CustomerControllerTest extends AbstractRestControllerTest {
     @Mock
     private CustomerService customerService;
     @InjectMocks
@@ -37,87 +42,109 @@ class CustomerControllerTest {
     }
 
     @Test
-    void listCustomers() throws Exception {
-        List<Customer> customers = new ArrayList<>();
-        customers.add(new Customer());
-        customers.add(new Customer());
+    void listPackages() throws Exception {
+        List<Customer> expectedCustomers = new ArrayList<>();
+        expectedCustomers.add(new Customer());
+        expectedCustomers.add(new Customer());
 
-        when(customerService.listAll()).thenReturn((List) customers);
+        when(customerService.listAll()).thenReturn((List) expectedCustomers);
 
-        mockMvc.perform(get("/customer/list"))
+        MvcResult mvcResult = mockMvc.perform(get("/customer/list"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(2)));
+                .andReturn();
+        Customer[] customersResult = mvcResultAsObject(mvcResult, Customer[].class);
+
+        assertEquals(expectedCustomers.size(), customersResult.length);
     }
 
     @Test
-    void showCustomer() {
+    void showPackage() throws Exception {
+        Integer id = 1;
+        when(customerService.getById(id)).thenReturn(new Customer());
+
+        MvcResult mvcResult = mockMvc.perform(get("/customer/show/1"))
+                .andExpect(status().isOk())
+                .andReturn();
+        Customer customerResult = mvcResultAsObject(mvcResult, Customer.class);
+
+        assertNotNull(customerResult);
     }
 
     @Test
-    void createCustomer() {
+    void createCustomer() throws Exception {
+        when(customerService.saveOrUpdate(any(Customer.class))).thenReturn(new Customer());
+
+        MvcResult mvcResult = mockMvc.perform(post("/customer/create"))
+                .andExpect(status().isOk())
+                .andReturn();
+        Customer customerResult = mvcResultAsObject(mvcResult, Customer.class);
+
+        assertNotNull(customerResult);
     }
 
     @Test
-    void editCustomer() {
+    void editCustomer() throws Exception {
+        Integer id = 1;
+        when(customerService.getById(id)).thenReturn(new Customer());
+        when(customerService.merge(any(Customer.class), any(Customer.class))).thenReturn(new Customer());
+        when(customerService.saveOrUpdate(any(Customer.class))).thenReturn(new Customer());
+
+        MvcResult mvcResult = mockMvc.perform(put("/customer/edit/1"))
+                .andExpect(status().isOk())
+                .andReturn();
+        Customer customerResult = mvcResultAsObject(mvcResult, Customer.class);
+
+        assertNotNull(customerResult);
     }
 
     @Test
-    void saveOrUpdate() {
+    void saveOrUpdate() throws Exception {
+        Integer id = 1;
+        Customer expectedCustomer = new Customer();
+        String firstName = "Master";
+        String lastName = "Splinter";
+        String email = "ms@tmnt.com";
+
+        expectedCustomer.setId(1);
+        expectedCustomer.setFirstName(firstName);
+        expectedCustomer.setLastName(lastName);
+        expectedCustomer.setEmail(email);
+
+
+        when(customerService.saveOrUpdate(any(Customer.class))).thenReturn(expectedCustomer);
+
+        MvcResult mvcResult = mockMvc.perform(post("/customer/saveOrUpdate")
+                        .param("id", String.valueOf(id))
+                        .param("firstName", firstName)
+                        .param("lastName", lastName)
+                        .param("email", email))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        Customer customerResult = mvcResultAsObject(mvcResult, Customer.class);
+        assertNotNull(customerResult);
+
+        ArgumentCaptor<Customer> customerArgumentCaptor = ArgumentCaptor.forClass(Customer.class);
+        verify(customerService).saveOrUpdate(customerArgumentCaptor.capture());
+
+        Customer boundCustomer = customerArgumentCaptor.getValue();
+
+        assertEquals(id, boundCustomer.getId());
+        assertEquals(firstName, boundCustomer.getFirstName());
+        assertEquals(lastName, boundCustomer.getLastName());
+        assertEquals(email, boundCustomer.getEmail());
     }
 
     @Test
-    void deleteCustomer() {
-    }
+    void deletePackage() throws Exception {
+        Integer id = 1;
+        when(customerService.getById(id)).thenReturn(new Customer());
 
-    @Test
-    void createPurchase() {
-    }
+        MvcResult mvcResult = mockMvc.perform(delete("/customer/delete/1"))
+                .andExpect(status().isOk())
+                .andReturn();
+        String content = mvcResult.getResponse().getContentAsString();
 
-    @Test
-    void testListCustomers() {
-    }
-
-    @Test
-    void testShowCustomer() {
-    }
-
-    @Test
-    void testCreateCustomer() {
-    }
-
-    @Test
-    void testEditCustomer() {
-    }
-
-    @Test
-    void testSaveOrUpdate() {
-    }
-
-    @Test
-    void testDeleteCustomer() {
-    }
-
-    @Test
-    void testCreatePurchase() {
-    }
-
-    @Test
-    void listPurhcases() {
-    }
-
-    @Test
-    void showPurchase() {
-    }
-
-    @Test
-    void editPurhcase() {
-    }
-
-    @Test
-    void saveOrUpdatePurchase() {
-    }
-
-    @Test
-    void deletePurchase() {
+        assertEquals("Deleted " + new Customer(), content);
     }
 }

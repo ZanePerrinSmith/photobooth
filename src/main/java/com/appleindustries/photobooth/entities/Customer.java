@@ -1,5 +1,6 @@
 package com.appleindustries.photobooth.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,7 @@ public class Customer extends AbstractEntity {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer", orphanRemoval = true)
     @ToString.Exclude
+    @JsonManagedReference
     List<Purchase> purchases = new ArrayList<>();
 
     private String firstName;

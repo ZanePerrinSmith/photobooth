@@ -1,6 +1,9 @@
 package com.appleindustries.photobooth.services;
 
 import com.appleindustries.photobooth.entities.PhotoPackage;
+import com.appleindustries.photobooth.repositories.PhotoPackageRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
@@ -10,12 +13,16 @@ import java.util.List;
  * @author zane
  */
 @Service
+@AllArgsConstructor
 public class PhotoPackageServiceJpaDaoImpl extends AbstractJpaDaoService implements PhotoPackageService {
+
+    @Autowired
+    PhotoPackageRepository photoPackageRepository;
 
     @Override
     public List<PhotoPackage> listAll() {
         EntityManager em = emf.createEntityManager();
-
+        photoPackageRepository.findAll();
         return em.createQuery("from PhotoPackage", PhotoPackage.class).getResultList();
     }
 
